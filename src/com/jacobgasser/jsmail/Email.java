@@ -16,14 +16,14 @@ public class Email {
     private MimeMessage emailMessage;
 
 
-    public void email(String message) {
+    public void email(String message, String subject, String sendTo) {
         String emailPort = "587";
         emailProperties = System.getProperties();
         emailProperties.put("mail.smtp.port", emailPort);
         emailProperties.put("mail.smtp.auth", "true");
         emailProperties.put("mail.smtp.starttls.enable", "true");
-        String toEmails = "jacobgasser3@gmail.com";
-        String emailSubject = "mhm";
+        String toEmails = sendTo;
+        String emailSubject = subject;
         String emailBody =  message;
         mailSession = Session.getDefaultInstance(emailProperties, null);
         emailMessage = new MimeMessage(mailSession);

@@ -27,7 +27,10 @@ public class PostGetParse {
         for(String fr : request.split("&")) {
             String[] mas = fr.split("=");
             mas[1] = mas[1].replaceAll("\\+", " ");
-            mas[1] = mas[1].replaceAll("%20", "+");
+            mas[1] = mas[1].replaceAll("%20", " ");
+            mas[1] = mas[1].replaceAll("%40", "@");
+            mas[1] = mas[1].replaceAll("%3F", "?");
+            mas[1] = mas[1].replaceAll("%2C", ",");
             map.put(mas[0],mas[1]);
         }
         return map;

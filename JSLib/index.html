@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Test Page</title>
+  </head>
+  <body>
+    <form action="http://localhost/" method="POST">
+      <input placeholder="sendto" id="sendto" />
+      <input placeholder="subject" id="subject" />
+      <input placeholder="message" id="message" />
+      <input value="true" id="sender" /> <input type="submit" />
+    </form>
+
+    <br /><br />
+    <button
+      onclick="send('I fixed the comma encoding, lemme just make sure this looks fine now...', 'I fixed it', 'jacobgasser3@gmail.com');"
+    >
+      Send Email
+    </button>
+
+    <script src="script.js"></script>
+    <script src="mail.js"></script>
+  </body>
+</html>

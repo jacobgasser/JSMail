@@ -1,5 +1,7 @@
 package com.jacobgasser.jsmail;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.jacobgasser.jsmail.utils.PostGetParse;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -7,6 +9,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -38,21 +41,25 @@ public class Main {
         for(String key : post.keySet()) {
             String val = post.get(key);
 
+            System.out.println(val);
             switch (key.toLowerCase()) {
 
                     case "say" :
                         pgp.returnThis(exchange, val);
 
                         continue;
-
                 case "send" :
-                    new Email().email(val);
-                    pgp.returnThis(exchange, "Attempted to send Email");
-                    continue;
 
-                    default:
-                        pgp.returnThis(exchange, "Error, incorrect key");
-                        continue;
+                    if(!post.containsKey("message")) return;
+                    if(!post.containsKey("sendto")) return;
+                    if(!post.containsKey("subject")) return;
+
+                    String message = post.get("message");
+                    String subject = post.get("subject");
+                    String sendTo = post.get("sendto");
+                    new Email().email(message,subject,sendTo);
+                    pgp.returnThis(exchange, "Attempted to send Email");
+
 
             }
 

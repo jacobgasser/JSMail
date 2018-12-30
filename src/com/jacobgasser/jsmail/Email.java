@@ -1,5 +1,7 @@
 package com.jacobgasser.jsmail;
 
+import com.jacobgasser.jsmail.utils.pwd;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -31,7 +33,7 @@ public class Email {
             emailMessage.setContent(emailBody, "text/html");
             String emailHost = "smtp.gmail.com";
             String fromUser = "jacobgasser3";
-            String fromUserEmailPassword = "Land93part!";
+            String fromUserEmailPassword = new pwd().getPassword();
             emailMessage.setFrom(fromUser);
             Transport transport = mailSession.getTransport("smtp");
             transport.connect(emailHost, fromUser, fromUserEmailPassword);

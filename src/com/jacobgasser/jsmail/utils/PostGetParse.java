@@ -27,6 +27,7 @@ public class PostGetParse {
         for(String fr : request.split("&")) {
             String[] mas = fr.split("=");
             mas[1] = mas[1].replaceAll("\\+", " ");
+            mas[1] = mas[1].replaceAll("%20", "+");
             map.put(mas[0],mas[1]);
         }
         return map;
@@ -38,12 +39,12 @@ public class PostGetParse {
         os.write(Files.readAllBytes(file.toPath()));
         os.close();
 
+    }
 
-
-
-
-
-
-
+    public void returnThis(HttpExchange exchange, String toReturn) throws IOException{
+        exchange.sendResponseHeaders(200, toReturn.getBytes().length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(toReturn.getBytes());
+        os.close();
     }
 }

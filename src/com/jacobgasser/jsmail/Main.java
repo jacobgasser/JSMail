@@ -25,14 +25,32 @@ public class Main {
 
     public void handle(HttpExchange exchange) throws IOException {
 
+
+
+
+
+
         PostGetParse pgp = new PostGetParse();
 
+
+
            HashMap<String, String> post =  pgp.parseRequests(pgp.getPost(exchange));
-           String thing1 = post.get("c");
-            exchange.sendResponseHeaders(200, thing1.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(thing1.getBytes());
-            os.close();
+        for(String key : post.keySet()) {
+            String val = post.get(key);
+
+            switch (key.toLowerCase()) {
+
+                case "say" :
+                    pgp.returnThis(exchange, val);
+                    continue;
+
+
+            }
+
+        }
+        
+
+            pgp.returnThis(exchange, "null");
         }
 
 

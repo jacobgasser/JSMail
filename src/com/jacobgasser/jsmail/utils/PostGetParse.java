@@ -4,6 +4,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PostGetParse {
 
@@ -20,8 +22,14 @@ public class PostGetParse {
         }
         return exchange.getRequestURI().getQuery();
     }
-    public String parseRequests(String request) {
-        return request.replaceAll("\\+", " ");
+    public HashMap<String, String> parseRequests(String request) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        for(String fr : request.split("&")) {
+            String[] mas = fr.split("=");
+            mas[1] = mas[1].replaceAll("\\+", " ");
+            map.put(mas[0],mas[1]);
+        }
+        return map;
     }
 
     public void disFile(File file, HttpExchange exchange) throws IOException {
@@ -29,5 +37,13 @@ public class PostGetParse {
         OutputStream os = exchange.getResponseBody();
         os.write(Files.readAllBytes(file.toPath()));
         os.close();
+
+
+
+
+
+
+
+
     }
 }

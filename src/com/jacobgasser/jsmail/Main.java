@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
+import java.util.HashMap;
 
 public class Main {
 
@@ -26,13 +27,14 @@ public class Main {
 
         PostGetParse pgp = new PostGetParse();
 
-        if(pgp.getGet(exchange).contains("oml")) {
-            exchange.sendResponseHeaders(200, "Ok Then".getBytes().length);
+           HashMap<String, String> post =  pgp.parseRequests(pgp.getPost(exchange));
+           String thing1 = post.get("c");
+            exchange.sendResponseHeaders(200, thing1.getBytes().length);
             OutputStream os = exchange.getResponseBody();
-            os.write("Ok Then".getBytes());
+            os.write(thing1.getBytes());
             os.close();
         }
 
 
     }
-}
+

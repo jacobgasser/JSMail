@@ -40,15 +40,24 @@ public class Main {
 
             switch (key.toLowerCase()) {
 
-                case "say" :
-                    pgp.returnThis(exchange, val);
+                    case "say" :
+                        pgp.returnThis(exchange, val);
+
+                        continue;
+
+                case "send" :
+                    new Email().email(val);
+                    pgp.returnThis(exchange, "Attempted to send Email");
                     continue;
 
+                    default:
+                        pgp.returnThis(exchange, "Error, incorrect key");
+                        continue;
 
             }
 
         }
-        
+
 
             pgp.returnThis(exchange, "null");
         }

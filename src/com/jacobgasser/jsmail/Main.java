@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] arguments) throws IOException {
 
         System.out.println("JSMail is starting...");
-        HttpServer httpServer = HttpServer.create(new InetSocketAddress(80), 0);
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(81), 0);
         HttpContext cAll = httpServer.createContext("/", new Main()::handle);
         httpServer.start();
         System.out.println("JSMail is online! (yaaay)");

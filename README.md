@@ -12,4 +12,4 @@ Where `Message` is your message you want to send, `Subject` is the subject of th
 
 You can also download `mail.js` inside of the `JSLib` folder.
 
-###This project is completely free and open source. Feel free to use.
+### This project is completely free and open source. Feel free to use.

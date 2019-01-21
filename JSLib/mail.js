@@ -1,5 +1,5 @@
-const server = "http://jsmail.jacobgasser.com:81/?";
-
+//const server = "http://jsmail.jacobgasser.com:81/?";
+const server = "http://localhost:81/?";
 function send(Message, Subject, Sendto) {
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", server, true);

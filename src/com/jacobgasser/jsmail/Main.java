@@ -10,11 +10,17 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main {
+
+        List<InetAddress> addresses = new ArrayList<>();
+
 
     public static void main(String[] arguments) throws IOException {
 
@@ -27,37 +33,31 @@ public class Main {
     }
 
     public void handle(HttpExchange exchange) throws IOException {
+        addresses.add(exchange.getRemoteAddress().getAddress());
 
-
-
-
-
-
+        System.out.println(exchange.getLocalAddress());
         PostGetParse pgp = new PostGetParse();
-
-
-
-           HashMap<String, String> post =  pgp.parseRequests(pgp.getPost(exchange));
-        for(String key : post.keySet()) {
+        HashMap<String, String> post = pgp.parseRequests(pgp.getPost(exchange));
+        for (String key : post.keySet()) {
             String val = post.get(key);
 
             System.out.println(val);
             switch (key.toLowerCase()) {
 
-                    case "say" :
-                        pgp.returnThis(exchange, val);
+                case "say":
+                    pgp.returnThis(exchange, val);
 
-                        continue;
-                case "send" :
+                    continue;
+                case "send":
 
-                    if(!post.containsKey("message")) return;
-                    if(!post.containsKey("sendto")) return;
-                    if(!post.containsKey("subject")) return;
+                    if (!post.containsKey("message")) return;
+                    if (!post.containsKey("sendto")) return;
+                    if (!post.containsKey("subject")) return;
 
                     String message = post.get("message");
                     String subject = post.get("subject");
                     String sendTo = post.get("sendto");
-                    new Email().email(message,subject,sendTo);
+                    new Email().email(message, subject, sendTo);
                     pgp.returnThis(exchange, "Attempted to send Email");
 
 
@@ -66,9 +66,9 @@ public class Main {
         }
 
 
-            pgp.returnThis(exchange, "null");
-        }
-
-
+        pgp.returnThis(exchange, "null");
     }
+
+
+}
 

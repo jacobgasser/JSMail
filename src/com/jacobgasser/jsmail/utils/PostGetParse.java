@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Map;
 
 public class PostGetParse {
 
@@ -17,23 +16,29 @@ public class PostGetParse {
     }
 
     public String getGet(HttpExchange exchange) throws IOException {
-        if(exchange.getRequestURI().getQuery() == null) {
+        if (exchange.getRequestURI().getQuery() == null) {
             return "";
         }
         return exchange.getRequestURI().getQuery();
     }
+
     public HashMap<String, String> parseRequests(String request) {
+
+
+
         HashMap<String, String> map = new HashMap<String, String>();
-        for(String fr : request.split("&")) {
+        for (String fr : request.split("&")) {
             String[] mas = fr.split("=");
-            mas[1] = mas[1].replaceAll("\\+", " ");
-            mas[1] = mas[1].replaceAll("%20", " ");
-            mas[1] = mas[1].replaceAll("%40", "@");
-            mas[1] = mas[1].replaceAll("%3F", "?");
-            mas[1] = mas[1].replaceAll("%2C", ",");
-            map.put(mas[0],mas[1]);
+            try {
+                mas[1] = java.net.URLDecoder.decode(mas[1], "UTF-8");
+            }catch (Exception e) {
+
+            }
+            map.put(mas[0], mas[1]);
         }
         return map;
+
+
     }
 
     public void disFile(File file, HttpExchange exchange) throws IOException {
@@ -44,7 +49,7 @@ public class PostGetParse {
 
     }
 
-    public void returnThis(HttpExchange exchange, String toReturn) throws IOException{
+    public void returnThis(HttpExchange exchange, String toReturn) throws IOException {
         exchange.sendResponseHeaders(200, toReturn.getBytes().length);
         OutputStream os = exchange.getResponseBody();
         os.write(toReturn.getBytes());

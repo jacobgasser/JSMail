@@ -24,7 +24,7 @@ public class Email {
         emailProperties.put("mail.smtp.starttls.enable", "true");
         String toEmails = sendTo;
         String emailSubject = subject;
-        String emailBody =  message;
+        String emailBody = message;
         mailSession = Session.getDefaultInstance(emailProperties, null);
         emailMessage = new MimeMessage(mailSession);
         try {
@@ -32,7 +32,7 @@ public class Email {
             emailMessage.setSubject(emailSubject);
             emailMessage.setContent(emailBody, "text/html");
             String emailHost = "smtp.gmail.com";
-            String fromUser = "jacobgasser3";
+            String fromUser = "jsmailbot";
             String fromUserEmailPassword = new pwd().getPassword();
             emailMessage.setFrom(fromUser);
             Transport transport = mailSession.getTransport("smtp");
@@ -40,7 +40,7 @@ public class Email {
             // transport.connect(emailHost, fromUser, fromUserEmailPassword);
             transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
             transport.close();
-            System.out.println("Sent Email: "+ "\n" + toEmails + "\n" + emailBody);
+            System.out.println("Sent Email: " + "\n" + toEmails + "\n" + emailBody);
         } catch (MessagingException exception) {
             System.out.println("Error sending email, \n message: " + message);
             exception.printStackTrace();
